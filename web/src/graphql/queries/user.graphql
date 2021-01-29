@@ -1,0 +1,9 @@
+query User {
+  users {
+    id
+    username
+    email
+    roles
+    createdAt
+  }
+}
