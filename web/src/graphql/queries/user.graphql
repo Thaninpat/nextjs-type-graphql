@@ -1,8 +1,8 @@
 query User {
   users {
     id
-    username
     email
+    username
     roles
     createdAt
   }

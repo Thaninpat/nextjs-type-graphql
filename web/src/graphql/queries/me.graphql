@@ -1,8 +1,8 @@
 query Me {
   me {
     id
-    username
     email
+    username
     roles
     createdAt
   }

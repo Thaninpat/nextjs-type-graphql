@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { useMeQuery, User } from '../generated/graphql'
 import Router from 'next/router'
+import Loader from 'react-spinners/ScaleLoader'
 
 interface Props {}
 
@@ -28,8 +29,8 @@ const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const [authAction, setAuthAction] = useState<Actions>('close')
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null)
 
-  const { data } = useMeQuery()
-
+  const { data, loading } = useMeQuery()
+  // if(!!loading) return <Loader/>
   useEffect(() => {
     if (data?.me) setLoggedInUser(data.me)
   }, [data?.me])
