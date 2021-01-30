@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ChakraProvider>
         <CSSReset />
         <AuthContextProvider>
-          {/* <NavBar /> */}
+          <NavBar />
           <Component {...pageProps} />
         </AuthContextProvider>
       </ChakraProvider>

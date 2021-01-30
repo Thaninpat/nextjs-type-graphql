@@ -3,6 +3,7 @@ import { buildSchema } from 'type-graphql';
 
 import { AuthResolvers } from './resolvers/AuthResolvers';
 import { JobRequestIt } from './resolvers/JobRequestIt';
+import { FactoryResolvers } from './resolvers/FactoryResolvers';
 
 import { verifyToken, createToken, sendToken } from './utils/tokenHandler';
 import { AppContext } from './types';
@@ -10,7 +11,7 @@ import { UserModel } from './entities/User';
 
 export default async () => {
   const schema = await buildSchema({
-    resolvers: [AuthResolvers, JobRequestIt],
+    resolvers: [AuthResolvers, JobRequestIt, FactoryResolvers],
     emitSchemaFile: { path: './src/schema.graphql' },
     validate: false,
   });

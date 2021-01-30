@@ -1,0 +1,52 @@
+type Factory {
+  id: ID!
+  factoryName: String!
+  productsMe: [FactoryProduct!]! # Products ที่บริษัทนี้ผลิต
+  receivedProducts: [FactoryProduct]! # Products ที่บริษัทที่รับมา
+  # productFromTiers: [FactoryProduct]! # Products ที่รับมาจาก Tier
+  # tiers: [FactoryTier]!  
+  createdAt: DateTime!
+  users: [User!]
+}
+  factoryName: ฮอนด้า!
+  productsMe:  รถ
+  productFromTiers: รับล้อรถมา
+  tiers: [FactoryTier]!  บริษัท ล้อ จำกัด
+  createdAt: DateTime!
+  users: [User!]
+
+      factoryName: บริษัท ล้อ จำกัด
+      productsMe:  ล้อ
+      productFromTiers: #null
+      tiers: [FactoryTier]!  #null
+      createdAt: DateTime!
+      users: [User!]
+
+
+
+
+type FactoryTier {
+  id: ID!
+  factoryName: [Factory!] # ซื่อบริษัท
+    productsMe
+      productName
+  productForFactory: [Factory!] # Factory ที่ Tier นี้ผลิตให้
+  # product: [FactoryProduct]! # Product อะไร
+  createdAt: DateTime!
+  user: [User!] # เป็น Array เพราะ สามารถมี User หลายคน เค้ามา Update ได้
+}
+
+type FactoryProduct {
+  id: ID!
+  factoryName: Factory! # ซื่อบริษัทใดบ้างที่ผลิดสินค้านี้
+  productName: String! # ชื่อ Product
+  factoryReceive: [Factory!]
+  description: String! # คำอธิบายสินค้า
+  imageUrl: String!
+  createdAt: DateTime!
+  user: [User!]
+}
+
+
+f
+p

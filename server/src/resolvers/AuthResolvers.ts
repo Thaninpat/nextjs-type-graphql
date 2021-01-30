@@ -29,6 +29,16 @@ export class ResponseMessage {
   message: string
 }
 
+// @InputType()
+// class SignupInput {
+//   @Field()
+//   email: string
+//   @Field()
+//   username: string
+//   @Field()
+//   password: string
+// }
+
 @Resolver()
 export class AuthResolvers {
   @Query(() => [User], { nullable: 'items' }) // [User]!
@@ -55,17 +65,21 @@ export class AuthResolvers {
     try {
       // Check if user is authenticated
       const user = await isAuthenticated(req)
+      if (!user) throw new Error('Not authenticated')
 
-      // if (!user) throw new Error('Not authenticated')
-
-      return user
+      return UserModel.findById(req.userId).populate({
+        path: 'jobIts',
+      })
     } catch (error) {
       throw error
     }
   }
 
+  // test Signup
+
   @Mutation(() => User, { nullable: true })
   async signup(
+    // @Arg('option') option: SignupInput
     @Arg('username') username: string,
     @Arg('email') email: string,
     @Arg('password') password: string,
@@ -78,13 +92,10 @@ export class AuthResolvers {
 
       // Check if username exist in the database
       const user = await UserModel.findOne({ username })
-      const checkEmail = await UserModel.findOne({ email })
+      console.log(user)
 
       if (user)
         throw new Error('Username already in use, please sign in instead.')
-
-      if (checkEmail)
-        throw new Error('Email already in use, please sign in instead.')
 
       // Validate username
       const isUsernameValid = validateUsername(username)
@@ -93,7 +104,6 @@ export class AuthResolvers {
         throw new Error('Username must be between 3 - 60 characters.')
 
       // Validate email
-
       const isEmailValid = validateEmail(email)
 
       if (!isEmailValid) throw new Error('Email is invalid.')
@@ -106,9 +116,7 @@ export class AuthResolvers {
 
       const hashedPassword = await bcrypt.hash(password, 10)
 
-      const newUser = await UserModel.create<
-        Pick<User, 'username' | 'email' | 'password'>
-      >({
+      const newUser = await UserModel.create({
         username,
         email,
         password: hashedPassword,
@@ -155,7 +163,9 @@ export class AuthResolvers {
       // Send token to the frontend
       sendToken(res, token)
 
-      return user
+      return UserModel.findById(user.id).populate({
+        path: 'jobIts',
+      })
     } catch (error) {
       throw error
     }

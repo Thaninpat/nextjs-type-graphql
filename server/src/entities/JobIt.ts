@@ -1,36 +1,42 @@
-import { getModelForClass, prop } from '@typegoose/typegoose';
-
-import { ObjectType, Field, ID } from 'type-graphql';
-import { User } from './User';
+import { getModelForClass, prop } from '@typegoose/typegoose'
 import mongoose from 'mongoose'
+import { ObjectType, Field, ID } from 'type-graphql'
+import { User } from './User'
 
 @ObjectType({ description: 'Job IT Model 2' })
 export class JobIt {
   @Field(() => ID)
-  id: string;
+  id: string
+
+  @Field()
+  @prop({ required: true, trim: true })
+  typeJob: string
+
+  @Field()
+  @prop({ required: true, trim: true })
+  comment: string
 
   @Field()
   @prop({ required: true })
-  typeJob: string;
-
-  @Field()
-  @prop({ required: true })
-  comment: string;
-
-  @Field()
-  @prop({ required: true })
-  desiredDate: string;
+  desiredDate: string
 
   @Field()
   @prop({ default: () => Date.now() + 60 * 60 * 1000 * 7 })
-  createdAt: Date;
+  createdAt: Date
 
+  // @Field(() => [User], { nullable: 'items' })
+  // @prop({
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User'
+  // })
+  // Users: User[]
 
-  @Field(() => [User])
+  @Field(() => User)
   @prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true,
   })
-  Users: User[]
+  user: User
 }
-export const JobItModel = getModelForClass(JobIt);
+export const JobItModel = getModelForClass(JobIt)

@@ -4,7 +4,6 @@ import { Box, Flex, Heading } from '@chakra-ui/react'
 import { useContext, useEffect } from 'react'
 import NavBar from '../components/NavBar'
 import { AuthContext } from '../context/AuthContextProvider'
-import { useMeQuery, useSignoutMutation } from '../generated/graphql'
 import Loader from 'react-spinners/ScaleLoader'
 
 const Index = () => {
@@ -12,21 +11,17 @@ const Index = () => {
 
   useEffect(() => {
     if (!loggedInUser) {
-      Router.push('/signIn')
+      Router.push('/')
     }
   }, [loggedInUser])
 
-  return !loggedInUser ? (
-    <Flex align={'center'} justify={'center'} p={20}>
-      <Loader color='#234bff' />
-    </Flex>
-  ) : (
+  return (
     <>
-      <NavBar />
-      <Flex align={'center'} justify={'center'} p={20}>
+      {/* <NavBar /> */}
+      <Flex align={'center'} justify={'center'} p={20} flexDirection={'column'}>
         <Heading>Hello Home page</Heading>
         <Box>
-          <p> Username : {loggedInUser.username}</p>
+          <p> Username : {loggedInUser?.username}</p>
         </Box>
       </Flex>
     </>
@@ -34,3 +29,9 @@ const Index = () => {
 }
 
 export default Index
+
+// !loggedInUser ? (
+//   <Flex align={'center'} justify={'center'} p={20}>
+//     <Loader color='#234bff' />
+//   </Flex>
+// ) :

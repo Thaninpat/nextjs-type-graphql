@@ -15,3 +15,4 @@ export const isAuthenticated = async (req: AppRequest) => {
 
   return user
 }
+
