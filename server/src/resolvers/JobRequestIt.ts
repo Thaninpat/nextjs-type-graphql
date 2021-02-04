@@ -1,9 +1,9 @@
-import { Resolver, Query, Mutation, Arg, Ctx } from 'type-graphql';
-import { JobIt, JobItModel } from '../entities/JobIt';
-import { UserModel } from '../entities/User';
-import { AppContext, RoleOptions } from '../types';
-import { ValidateTypeJob, ValidateComment } from '../utils/validate';
-import { isAuthenticated } from '../utils/authHandler';
+import { Resolver, Query, Mutation, Arg, Ctx } from 'type-graphql'
+import { JobIt, JobItModel } from '../entities/JobIt'
+import { UserModel } from '../entities/User'
+import { AppContext, RoleOptions } from '../types'
+import { ValidateTypeJob, ValidateComment } from '../utils/validate'
+import { isAuthenticated } from '../utils/authHandler'
 // import { Request, Response } from 'express';
 
 @Resolver()
@@ -15,71 +15,85 @@ export class JobRequestIt {
     // async ใช้ไว้ให้รู้ว่าเป็น async ฟังชั้นไม่ต้อง await ก็ได้
     try {
       // Check if user is authenticated
-      const user = await isAuthenticated(req);
+      const user = await isAuthenticated(req)
 
       // Check if user is authorized (Admin, SuperAdmin)
       const isAuthorized =
         user.roles.includes(RoleOptions.superAdmin) ||
-        user.roles.includes(RoleOptions.admin);
+        user.roles.includes(RoleOptions.admin)
 
-      if (!isAuthorized) throw new Error('No Authorization.');
+      if (!isAuthorized) throw new Error('No Authorization.')
 
       return JobItModel.find().populate({
         path: 'user',
         populate: { path: 'jobIts' },
-      });
+      })
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  @Query(() => JobIt, { nullable: true })
-  async jobMe(
-    // @Ctx() { req, res }: {req: Request; res: Response}
-    @Arg('typeJob') typeJob: string
-    // @Arg('id') id: string
-    // @Ctx() { req }: AppContext
-  ): Promise<JobIt | null> {
-    try {
-      // Check if user is authenticated
-      // const user = await isAuthenticated(req);
+  // @Query(() => JobIt, { nullable: true })
+  // async jobMe2(
+  //   @Arg('user') user: string
+  //   @Ctx() { req }: AppContext): Promise<User | JobIt | null> {
+  //   try {
 
-      // if (!user) throw new Error('Not authenticated')
-      // if (!user) throw new Error('No Authorization.');
+  //     const user = await isAuthenticated(req)
+  //     console.log('user Id: ', req.userId)
+  //     if (!user) throw new Error('Not authenticated')
 
-      const jobIt = await JobItModel.findOne({ typeJob });
-      if (!jobIt) throw new Error('JobIt not found.');
+  //     const jobMe = await JobItModel.find(user)
+  //     console.log('Job user :', jobMe.id)
 
-      // const id = await JobItModel.findById(id);
-      // if (!id) throw new Error('JobIt not found.');
+  //     return JobItModel.findById(req.userId).populate({
+  //       path: 'jobIts',
+  //       populate: { path: 'user' },
+  //     })
+  //   } catch (error) {
+  //     throw error
+  //   }
+  // }
 
-      // query{
-      //   jobMe(
-      //     id: "5fd6d1a45252b0095cc43464"
-      //   ){
-      //     typeJob
-      //     id
-      //     createdAt
-      //     user{
-      //       id
-      //       username
-      //       jobIts{
-      //         typeJob
-      //       }
-      //     }
-      //   }
-      // }
+  // @Query(() => JobIt, { nullable: true })
+  // async jobMe(
+  //   // @Arg('user') user: string,
+  //   @Ctx() { req }: AppContext
+  // ): Promise<User | JobIt | null> {
+  //   try {
+  //     const userId = await isAuthenticated(req)
+  //     console.log('user Id: ', userId.id)
+  //     if (!userId) throw new Error('Not authenticated')
 
-      // return JobItModel.findById({ id }).populate({
-      return JobItModel.findOne({ typeJob }).populate({
-        path: 'user',
-        populate: { path: 'jobIts' },
-      });
-      // return jobIt;
-    } catch (error) {
-      throw error;
-    }
-  }
+  //     // const jobIdUser = await JobItModel.findById(req.userId)
+  //     // console.log('jobIdUser: ', jobIdUser.typeJob)
+
+  //     return JobItModel.findById('601b944cb2448a0850e9aa4f').populate({
+  //       path: 'user',
+  //       populate: { path: 'jobIts' },
+  //     })
+  //     // return jobIdUser
+  //   } catch (error) {
+  //     throw error
+  //   }
+  // }
+
+  // @Query(() => User, { nullable: true })
+  // async jobMe(@Ctx() { req }: AppContext): Promise<User | null> {
+  //   try {
+  //     const userId = await isAuthenticated(req)
+
+  //     if (!userId) throw new Error('Not authenticated')
+  //     console.log('user Id: ', userId.jobIts)
+  //     // return userId
+  //     return UserModel.findById(req.userId).populate({
+  //       path: 'jobIts',
+  //       populate: { path: 'user' },
+  //     })
+  //   } catch (error) {
+  //     throw error
+  //   }
+  // }
 
   @Mutation(() => JobIt)
   async createJob(
@@ -90,42 +104,42 @@ export class JobRequestIt {
     @Ctx() { req }: AppContext
   ): Promise<JobIt | null> {
     try {
-      if (!typeJob) throw new Error('โปรใช้ประเภทงาน');
-      if (!comment) throw new Error('โปรใส่ comment');
-      if (!desiredDate) throw new Error('โปรใส่ วันที่ต้องการ');
+      if (!typeJob) throw new Error('โปรใช้ประเภทงาน')
+      if (!comment) throw new Error('โปรใส่ comment')
+      if (!desiredDate) throw new Error('โปรใส่ วันที่ต้องการ')
 
-      const user = await UserModel.findById(req.userId);
-      if (!user) return null;
+      const user = await UserModel.findById(req.userId)
+      if (!user) return null
 
-      const isTypeJob = ValidateTypeJob(typeJob);
-      const isComment = ValidateComment(comment);
+      const isTypeJob = ValidateTypeJob(typeJob)
+      const isComment = ValidateComment(comment)
       if (!isTypeJob || !isComment)
-        throw new Error('มีความยาวมากกว่า 60 ตัวอักษร');
+        throw new Error('มีความยาวมากกว่า 60 ตัวอักษร')
 
       const newJob = await JobItModel.create({
         typeJob,
         comment,
         desiredDate,
         user: user.id,
-      });
+      })
 
       if (!user.jobIts) {
         //!  --->ถ้า user นั้นมีฟิลด์ที่ชื้อ jobIts มั้ย ถ้าไม่มีก็ไปสร้างฟิลด์นี้ขึ้นมา
-        user.jobIts = [newJob];
+        user.jobIts = [newJob]
       } else {
         //!  --->มิฉะนั้น  ถ้ามีฟิลด์ jobIts อยู่แล้ว ให้ push new product ที่พึ่ง Create เข้าไป
-        user.jobIts.push(newJob);
+        user.jobIts.push(newJob)
       }
 
-      await user.save();
+      await user.save()
 
-      await newJob.save();
+      await newJob.save()
       return JobItModel.findById(newJob.id).populate({
         path: 'user',
         populate: { path: 'jobIts' },
-      });
+      })
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 }

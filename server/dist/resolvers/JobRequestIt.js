@@ -36,20 +36,6 @@ let JobRequestIt = class JobRequestIt {
             throw error;
         }
     }
-    async jobMe(typeJob) {
-        try {
-            const jobIt = await JobIt_1.JobItModel.findOne({ typeJob });
-            if (!jobIt)
-                throw new Error('JobIt not found.');
-            return JobIt_1.JobItModel.findOne({ typeJob }).populate({
-                path: 'user',
-                populate: { path: 'jobIts' },
-            });
-        }
-        catch (error) {
-            throw error;
-        }
-    }
     async createJob(typeJob, comment, desiredDate, { req }) {
         try {
             if (!typeJob)
@@ -96,13 +82,6 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], JobRequestIt.prototype, "JobIts", null);
-__decorate([
-    type_graphql_1.Query(() => JobIt_1.JobIt, { nullable: true }),
-    __param(0, type_graphql_1.Arg('typeJob')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], JobRequestIt.prototype, "jobMe", null);
 __decorate([
     type_graphql_1.Mutation(() => JobIt_1.JobIt),
     __param(0, type_graphql_1.Arg('typeJob')),

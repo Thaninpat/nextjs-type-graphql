@@ -29,7 +29,7 @@ __decorate([
     typegoose_1.prop({
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: 'Factory',
-        required: true
+        required: true,
     }),
     __metadata("design:type", Array)
 ], FactoryTier.prototype, "factoryName", void 0);
@@ -38,7 +38,7 @@ __decorate([
     typegoose_1.prop({
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: 'Factory',
-        required: true
+        required: true,
     }),
     __metadata("design:type", Array)
 ], FactoryTier.prototype, "productForFactory", void 0);
@@ -52,7 +52,7 @@ __decorate([
     typegoose_1.prop({
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
     }),
     __metadata("design:type", Array)
 ], FactoryTier.prototype, "user", void 0);

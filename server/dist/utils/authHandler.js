@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isAuthenticated = void 0;
 const User_1 = require("../entities/User");
-exports.isAuthenticated = async (req) => {
+const isAuthenticated = async (req) => {
     if (!req.userId)
         throw new Error('Please log in to proceed.');
     const user = await User_1.UserModel.findById(req.userId);
@@ -12,4 +12,5 @@ exports.isAuthenticated = async (req) => {
         throw new Error('Not authenticated.');
     return user;
 };
+exports.isAuthenticated = isAuthenticated;
 //# sourceMappingURL=authHandler.js.map

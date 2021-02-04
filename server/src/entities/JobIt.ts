@@ -18,18 +18,11 @@ export class JobIt {
 
   @Field()
   @prop({ required: true })
-  desiredDate: string
+  desiredDate: Date
 
   @Field()
   @prop({ default: () => Date.now() + 60 * 60 * 1000 * 7 })
   createdAt: Date
-
-  // @Field(() => [User], { nullable: 'items' })
-  // @prop({
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'User'
-  // })
-  // Users: User[]
 
   @Field(() => User)
   @prop({
@@ -38,5 +31,12 @@ export class JobIt {
     required: true,
   })
   user: User
+
+  // @Field(() => [User], { nullable: 'items' })
+  // @prop({
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User'
+  // })
+  // Users: User[]
 }
 export const JobItModel = getModelForClass(JobIt)

@@ -35,7 +35,7 @@ type JobIt {
   id: ID!
   typeJob: String!
   comment: String!
-  desiredDate: String!
+  desiredDate: DateTime!
   createdAt: DateTime!
   user: User!
 }
@@ -57,7 +57,6 @@ type Query {
   users: [User]!
   me: User
   JobIts: [JobIt]!
-  jobMe(typeJob: String!): JobIt
   Factories: [Factory]!
   FactoryById(id: String!): Factory
   FactoryFindOne(factoryName: String!): Factory

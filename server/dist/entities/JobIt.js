@@ -36,7 +36,7 @@ __decorate([
 __decorate([
     type_graphql_1.Field(),
     typegoose_1.prop({ required: true }),
-    __metadata("design:type", String)
+    __metadata("design:type", Date)
 ], JobIt.prototype, "desiredDate", void 0);
 __decorate([
     type_graphql_1.Field(),
