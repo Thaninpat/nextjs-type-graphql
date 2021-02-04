@@ -10,6 +10,7 @@ import AuthContextProvider from '../context/AuthContextProvider'
 import NavBar from '../components/NavBar'
 import theme from '../theme'
 import { ChakraProvider, CSSReset } from '@chakra-ui/react'
+import { CheckSignIn } from '../components/CheckSignIn'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

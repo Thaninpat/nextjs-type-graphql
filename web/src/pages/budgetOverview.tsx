@@ -1,30 +1,60 @@
-import { Box, Container, Heading } from '@chakra-ui/react'
-import React from 'react'
+import {
+  Box,
+  Heading,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  TableCaption,
+  Center,
+  Flex,
+} from '@chakra-ui/react'
+
+import React, { useState } from 'react'
 import { BudgetItem } from '../components/BudgetItem'
+import { Search } from '../components/Search'
 import { results } from './api/data'
 
 // ไม่ต้องมี interface ในหน้านี้ก้ได้ เพราะหน้านี้เป็น root
-interface budgetOverviewProps {
-  // result: {
-  //   id: number
-  //   label: string
-  //   key: string
-  // }
-}
+interface budgetOverviewProps {}
+
 const budgetOverview: React.FC<budgetOverviewProps> = () => {
-  const result = results.map((item, index) => {
-    return (
-      <ul key={index}>
-        <BudgetItem result={item} />
-      </ul>
-    )
-  })
+  const [searchText, setSearchText] = useState('')
+
+  const result = results
+    .filter((result) => {
+      return result.label.includes(searchText)
+    })
+    .map((item, index) => {
+      return <BudgetItem key={index} result={item} />
+    })
 
   return (
-    <Container maxW='xl' centerContent>
-      <Heading textAlign={'center'}>Budget</Heading>
-      <Box m={5}>{result}</Box>
-    </Container>
+    <Flex
+      align={'center'}
+      justify={'space-between'}
+      p={20}
+      flexDirection={'column'}
+    >
+      <Heading textAlign='center'>Budget</Heading>
+      <Search value={searchText} onValueChange={setSearchText} />
+      <Center marginTop='30px'>
+        <Box maxW={1200} borderWidth='1px' borderRadius='lg' p={10}>
+          <Table variant='simple' size='md'>
+            <TableCaption>Table Caption</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>Id</Th>
+                <Th>Label</Th>
+                <Th>Key</Th>
+              </Tr>
+            </Thead>
+            <Tbody>{result}</Tbody>
+          </Table>
+        </Box>
+      </Center>
+    </Flex>
   )
 }
 

@@ -1,4 +1,4 @@
-import { Box, Container } from '@chakra-ui/react'
+import { Tbody, Tr, Td } from '@chakra-ui/react'
 import React from 'react'
 
 interface BudgetItemProps {
@@ -14,10 +14,10 @@ export const BudgetItem: React.FC<BudgetItemProps> = ({
   result,
 }: BudgetItemProps) => {
   return (
-    <Container>
-      <Box m={4}>
-        id :{result.id} label :{result.label} key:{result.key}
-      </Box>
-    </Container>
+    <Tr>
+      <Td>{result.id + 1}</Td>
+      <Td>{result.label}</Td>
+      <Td>{result.key}</Td>
+    </Tr>
   )
 }

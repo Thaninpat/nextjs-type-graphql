@@ -50,6 +50,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
           <Link href='/'>Home</Link>
           <Link href='/user'>Users</Link>
           <Link href='/budgetOverview'>Budget</Link>
+          <Link href='/jobIt'>Job It</Link>
         </Flex>
         <Menu>
           <MenuButton size='sm' mr={4} ml={4}>
@@ -67,8 +68,8 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
   } else {
     body = (
       <Flex>
-        <Link href='/signIn'>Sign in</Link>
-        <Link href='/signUp'>sign Up</Link>
+        <Link href='/signIn'>Sign In</Link>
+        <Link href='/signUp'>Sign Up</Link>
       </Flex>
     )
   }
