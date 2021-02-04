@@ -40,6 +40,7 @@ export class User {
   @prop({
     type: String,
     enum: RoleOptions,
+    //enum เลือกได้ 1 ใน 4 เท่านั้นไม่สามารถพิ้มอย่างอื่นได้และมี autocomplete(เติมข้อความอัติโนมัติ)
     default: [RoleOptions.client],
   })
   roles: RoleOptions[]
@@ -48,12 +49,12 @@ export class User {
   @prop({ default: () => Date.now() + 60 * 60 * 1000 * 7 })
   createdAt: Date
 
-  // @Field(() => [JobIt])
-  // @prop({
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'JobIt'
-  // })
-  // JobIts: JobIt[]
+  @Field(() => [JobIt], { nullable: 'items' })
+  @prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'JobIt',
+  })
+  jobIts: JobIt[]
 }
 
 export const UserModel = getModelForClass(User)

@@ -11,6 +11,7 @@ export enum RoleOptions {
 
 export interface AppRequest extends Request {
   userId?: string;
+  // jobId?: string;
   tokenVersion?: number;
 }
 
@@ -19,7 +20,7 @@ export interface AppContext {
   res: Response;
 }
 
-export interface AppJobIt {
-  id?: string;
+export interface AppJobIt extends Request {
+  jobId?: string;
   username?: number;
 }

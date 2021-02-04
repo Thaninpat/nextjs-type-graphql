@@ -5,6 +5,16 @@ import Router from 'next/router'
 // import styled from 'styled-components'
 import { AuthContext } from '../context/AuthContextProvider'
 import { useMeQuery, useSignoutMutation } from '../generated/graphql'
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from '@chakra-ui/react'
 
 interface NavBarProps {}
 
@@ -32,37 +42,42 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
       alert('Sorry cannot proceed')
     }
   }
+  let body = null
+  if (!!loggedInUser) {
+    body = (
+      <>
+        <Flex>
+          <Link href='/'>Home</Link>
+          <Link href='/user'>Users</Link>
+          <Link href='/budgetOverview'>Budget</Link>
+          <Link href='/product'>Product</Link>
+        </Flex>
+        <Menu>
+          <MenuButton size='sm' mr={4} ml={4}>
+            <Avatar size='sm' name={loggedInUser.username} src='' />
+          </MenuButton>
+          <MenuList color={'black'}>
+            <MenuItem>Edit profile</MenuItem>
+            <MenuItem type='submit' onClick={handleSignout}>
+              Sign Out
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </>
+    )
+  } else {
+    body = (
+      <Flex>
+        <Link href='/signIn'>Sign In</Link>
+        <Link href='/signUp'>Sign Up</Link>
+      </Flex>
+    )
+  }
 
   return (
-    <header
-      className='headerContainer'
-      style={{
-        width: '100%',
-        height: '3rem',
-        background: '#888',
-        display: 'flex',
-      }}
-    >
-      <nav
-        style={{
-          width: '80%',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-        }}
-      >
-        {loggedInUser ? (
-          <>
-            <button onClick={handleSignout}>Sign Out</button>
-          </>
-        ) : (
-          <>
-            <Link href='/signIn'>Sign In</Link>
-            <Link href='/signUp'>Sign Up</Link>
-          </>
-        )}
-      </nav>
-    </header>
+    <Box bg='#888' w='100%' p={2} color='white'>
+      <Flex justifyContent={'space-between'}>{body}</Flex>
+    </Box>
   )
 }
 
