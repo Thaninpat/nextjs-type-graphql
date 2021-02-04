@@ -51,6 +51,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
           <Link href='/user'>Users</Link>
           <Link href='/budgetOverview'>Budget</Link>
           <Link href='/product'>Product</Link>
+          <Link href='/job2'>Job</Link>
         </Flex>
         <Menu>
           <MenuButton size='sm' mr={4} ml={4}>
